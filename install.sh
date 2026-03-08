@@ -17,7 +17,7 @@ sudo apt install -y git docker-compose
 mkdir -p /opt/jarvis
 cd /opt/jarvis
 
-git clone https://github.com/SEUUSUARIO/jarvis-saas .
+git clone https://github.com/Xadaiclub/homeassistant .
 
 docker compose up -d
 
