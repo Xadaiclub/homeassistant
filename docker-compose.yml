@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+
+  traefik:
+    image: traefik:v3
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8081:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    network_mode: host
+    volumes:
+      - ./homeassistant:/config
+    restart: unless-stopped
+
+  nodered:
+    image: nodered/node-red
+    ports:
+      - "1880:1880"
+    volumes:
+      - ./nodered:/data
+
+  influxdb:
+    image: influxdb:2
+    ports:
+      - "8086:8086"
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+
+  ollama:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:main
+    ports:
+      - "8080:8080"
